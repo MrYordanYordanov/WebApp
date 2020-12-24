@@ -1,0 +1,171 @@
+﻿@model IEnumerable<WebApp.Models.ViewModels.Semester>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Semesters</h2>
+
+<div>
+    <form class="form-inline">
+        <label for="Name">Name:</label>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="semName" placeholder="Name">
+        </div>
+        <label for="StartDate">StartDate:</label>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="date" class="form-control" id="semStartDate" placeholder="startDate">
+        </div>
+        <label for="EndDate">EndDate:</label>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="date" class="form-control" id="semEndDate" placeholder="endDate">
+        </div>
+        <button type="button" id="create" class="btn btn-primary mb-2">Create new semester</button>
+    </form>
+</div>
+<br />
+<table class="table" id="semsGrid">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    <button type="button" name="editBtn" onclick="editBtn(this)" class="btn btn-warning mb-2">Edit</button>
+                    @*@Html.("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                    @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        View disciplines
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function saveBtn (result) {
+            var childrens = $(result).parent().parent().children();
+            var nameinput = $(childrens[1]).children();
+            var startDateinput = $(childrens[2]).children();
+            var endDateinput = $(childrens[3]).children();
+            var semEditName = $(nameinput[0]).val();
+            var semEditStartDate = $(startDateinput[0]).val();
+            var semEditEndDate = $(endDateinput[0]).val();
+
+
+            var id=$(childrens[0]).text();
+            $.ajax(
+                {
+                    type: "PUT", //HTTP PUT Method
+                    url: "Semesters/Edit", // Controller/View
+                    data: { //Passing data
+                        Id:id,
+                        Name: semEditName, //Reading text box values using Jquery
+                        StartDate: semEditStartDate,
+                        EndDate: semEditEndDate
+                    },
+                    success: function (result) {
+                        $(childrens[1]).empty()
+                            .append(`<td>${result.name}</td>`);
+                        $(childrens[2]).empty()
+                            .append(`<td>${result.startDate.toString()}</td>`);
+                        $(childrens[3]).empty()
+                            .append(`<td>${result.endDate.toString()}</td>`);
+                        $(childrens[4]).empty()
+                            .append(`<button type="button" onclick="editBtn($(this))" class="btn btn-warning mb-2">Edit</button>`);
+                    }
+                });
+        };
+
+
+        function editBtn(result) {
+
+            var childrens = $(result).parent().parent().children();
+            var semName = $(childrens[1]).text().trim();
+            var semStartDate = $(childrens[2]).text().trim();
+            var semtEndDate= $(childrens[3]).text().trim();
+
+            $(childrens[1]).empty()
+                .append(`<input type="text" class="form-control" value="${semName}" id="semNameEdit" placeholder="Name">`)
+            $(childrens[2]).empty()
+                .append(`<input type="date" class="form-control" value="${semStartDate}" id="semStartDateEdit" placeholder="StartDate">`)
+            $(childrens[3]).empty()
+                .append(`<input type="date" class="form-control" value="${semtEndDate}" id="semEndDateEdit" placeholder="EndDate">`)
+            $(childrens[4]).empty()
+                .append(`<button  onclick="saveBtn($(this))" type="button" name="saveBtn" class="btn btn-success mb-2">Save</button>`)
+            };
+
+
+
+        $(document).ready(function () {
+            $('#create').click(function () {
+                semName = $('#semName').val();
+                semStartDate = $('#semStartDate').val();
+                semEndDate = $('#semEndDate').val();
+
+                $.ajax(
+                    {
+                        type: "POST", //HTTP POST Method
+                        url: "Semesters/Create", // Controller/View
+                        data: { //Passing data
+                            Name: semName, //Reading text box values using Jquery
+                            StartDate: semStartDate,
+                            EndDate: semEndDate
+                        },
+                        success: function (result) {
+
+                            $('#semsGrid > tbody:last')
+                                .append(`<tr><td>${result.id}</td><td>${result.name}</td><td>${result.startDate}</td><td>${result.endDate}</td><td>
+                    <button type="button" onclick="editBtn(this)"   name="editBtn" class="btn btn-warning mb-2">Edit</button></td></tr>`);
+                        }
+                    });
+
+                $('#semName').val('');
+                $('#semStartDate').val('');
+                $('#semEndDate').val('');
+            })
+        });
+    </script>
+
+}

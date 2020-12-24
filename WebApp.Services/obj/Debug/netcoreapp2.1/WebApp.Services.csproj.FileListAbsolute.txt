@@ -1,0 +1,12 @@
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\bin\Debug\netcoreapp2.1\WebApp.Services.deps.json
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\bin\Debug\netcoreapp2.1\WebApp.Services.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\obj\Debug\netcoreapp2.1\WebApp.Services.csproj.CoreCompileInputs.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\obj\Debug\netcoreapp2.1\WebApp.Services.AssemblyInfoInputs.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\obj\Debug\netcoreapp2.1\WebApp.Services.AssemblyInfo.cs
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\bin\Debug\netcoreapp2.1\WebApp.Services.pdb
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\bin\Debug\netcoreapp2.1\WebApp.Models.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\bin\Debug\netcoreapp2.1\WebApp.Models.pdb
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\obj\Debug\netcoreapp2.1\WebApp.Services.csprojAssemblyReference.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\obj\Debug\netcoreapp2.1\WebApp.Services.csproj.CopyComplete
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\obj\Debug\netcoreapp2.1\WebApp.Services.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Services\obj\Debug\netcoreapp2.1\WebApp.Services.pdb

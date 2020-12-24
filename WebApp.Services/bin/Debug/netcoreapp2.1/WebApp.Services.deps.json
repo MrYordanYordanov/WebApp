@@ -1,0 +1,52 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "e1bc70c2dfebe0b4162cb41380a9d9f1cdbb6e74"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "WebApp.Services/1.0.0": {
+        "dependencies": {
+          "MySqlConnector": "1.2.1",
+          "WebApp.Models": "1.0.0"
+        },
+        "runtime": {
+          "WebApp.Services.dll": {}
+        }
+      },
+      "MySqlConnector/1.2.1": {
+        "runtime": {
+          "lib/netcoreapp2.1/MySqlConnector.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.2.1.0"
+          }
+        }
+      },
+      "WebApp.Models/1.0.0": {
+        "runtime": {
+          "WebApp.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WebApp.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MySqlConnector/1.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ORgYD4eJ11vIpSkMS4jFjQ0jKUqfcBUtaE54hg5Q+JvpAV/QeCDMnKgyrLh0lMvtB7SgPdlY+6TLr2KFcdQJPw==",
+      "path": "mysqlconnector/1.2.1",
+      "hashPath": "mysqlconnector.1.2.1.nupkg.sha512"
+    },
+    "WebApp.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

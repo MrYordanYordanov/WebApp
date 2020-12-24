@@ -1,0 +1,9 @@
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\bin\Debug\netcoreapp2.1\WebApp.Models.deps.json
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\bin\Debug\netcoreapp2.1\WebApp.Models.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\bin\Debug\netcoreapp2.1\WebApp.Models.pdb
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\obj\Debug\netcoreapp2.1\WebApp.Models.csprojAssemblyReference.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\obj\Debug\netcoreapp2.1\WebApp.Models.csproj.CoreCompileInputs.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\obj\Debug\netcoreapp2.1\WebApp.Models.AssemblyInfoInputs.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\obj\Debug\netcoreapp2.1\WebApp.Models.AssemblyInfo.cs
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\obj\Debug\netcoreapp2.1\WebApp.Models.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Models\obj\Debug\netcoreapp2.1\WebApp.Models.pdb

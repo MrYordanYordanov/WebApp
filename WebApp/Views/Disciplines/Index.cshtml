@@ -1,0 +1,156 @@
+﻿@model IEnumerable<WebApp.Models.ViewModels.Discipline>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Disciplines</h2>
+
+<div>
+    <form class="form-inline">
+        <label for="Name">Name:</label>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="disciplineName" placeholder="Name">
+        </div>
+        <label for="ProfessorName">ProfessorName:</label>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="disciplineProfessorName" placeholder="ProfessorName">
+        </div>
+        <label for="Score">Score:</label>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="number" class="form-control" min="0" value="0" step=".5" id="disciplineScore">
+        </div>
+        <button type="button" id="create" class="btn btn-primary mb-2">Create new descipline</button>
+    </form>
+</div>
+<br />
+<table class="table" id="disciplinesGrid">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfessorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Score)
+                </td>
+                <td>
+                    <button type="button" name="editBtn" onclick="editBtn(this)" class="btn btn-warning mb-2">Edit</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function saveBtn(result) {
+            var childrens = $(result).parent().parent().children();
+            var nameinput = $(childrens[1]).children();
+            var prinput = $(childrens[2]).children();
+            var scoreinput = $(childrens[3]).children();
+            var disEditName = $(nameinput[0]).val();
+            var disEditPrName = $(prinput[0]).val();
+            var disEditPrScore = $(scoreinput[0]).val();
+
+
+            var id = $(childrens[0]).text();
+            $.ajax(
+                {
+                    type: "PUT", //HTTP PUT Method
+                    url: "Disciplines/Edit", // Controller/View
+                    data: { //Passing data
+                        Id: id,
+                        Name: disEditName, //Reading text box values using Jquery
+                        ProfessorName: disEditPrName,
+                        Score: disEditPrScore
+                    },
+                    success: function (result) {
+                        $(childrens[1]).empty()
+                            .append(`<td>${result.name}</td>`);
+                        $(childrens[2]).empty()
+                            .append(`<td>${result.professorName}</td>`);
+                        $(childrens[3]).empty()
+                            .append(`<td>${result.score.toFixed(2)}</td>`);
+                        $(childrens[4]).empty()
+                            .append(`<button type="button" onclick="editBtn($(this))" class="btn btn-warning mb-2">Edit</button>`);
+                    }
+                });
+        };
+
+
+        function editBtn(result) {
+
+            var childrens = $(result).parent().parent().children();
+            var disName = $(childrens[1]).text().trim();
+            var disPrName = $(childrens[2]).text().trim();
+            var disScore = $(childrens[3]).text().trim();
+
+            $(childrens[1]).empty()
+                .append(`<input type="text" class="form-control" value="${disName}" id="disNameEdit" placeholder="Name">`)
+            $(childrens[2]).empty()
+                .append(`<input type="text" class="form-control" value="${disPrName}" id="disPrNameEdit" placeholder="ProfessorName">`)
+            $(childrens[3]).empty()
+                .append(`<input type="number"  min="0"  step=".5" class="form-control" value="${disScore}" id="disScoreEdit">`)
+            $(childrens[4]).empty()
+                .append(`<button  onclick="saveBtn($(this))" type="button" name="saveBtn" class="btn btn-success mb-2">Save</button>`)
+        };
+
+
+
+        $(document).ready(function () {
+            $('#create').click(function () {
+                disciplineName = $('#disciplineName').val();
+                disciplineProfessorName = $('#disciplineProfessorName').val();
+                disciplineScore= $('#disciplineScore').val();
+
+                $.ajax(
+                    {
+                        type: "POST", //HTTP POST Method
+                        url: "Disciplines/Create", // Controller/View
+                        data: { //Passing data
+                            Name: disciplineName, //Reading text box values using Jquery
+                            ProfessorName: disciplineProfessorName,
+                            Score: disciplineScore
+                        },
+                        success: function (result) {
+                            $('#disciplinesGrid > tbody:last')
+                                .append(`<tr><td>${result.id}</td><td>${result.name}</td><td>${result.professorName}</td><td>${result.score.toFixed(2)}</td><td>
+                        <button type="button" onclick="editBtn(this)"  name="editBtn" class="btn btn-warning mb-2">Edit</button></td></tr>`);
+                        }
+                    });
+
+                $('#disciplineName').val('');
+                $('#disciplineProfessorName').val('');
+                $('#disciplineScore').val('');
+            })
+        });
+    </script>
+
+}
