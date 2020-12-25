@@ -1,0 +1,192 @@
+﻿@model WebApp.Models.ViewModels.SemesterDisciplies
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>@Model.Semester.Name</h4>
+    <h5>Start Date: @Model.Semester.StartDate</h5>
+    <h5>End Date: @Model.Semester.EndDate</h5>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+    <div id="semId" style="display: none;">
+        @Model.Semester.Id
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<br />
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Show disciplines
+</button>
+
+<div class="collapse" id="collapseExample">
+    <table class="table" id="semsdis">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Professor Name
+                </th>
+                <th>
+                    Score
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dis in Model.Disciplines)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => dis.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => dis.ProfessorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => dis.Score)
+                </td>
+                <td>
+                    @if (dis.Score == 0)
+                    {
+                        <button type="button" name="deleteBtn" onclick="deleteBtn(this)" class="btn btn-danger mb-2">Remove</button>
+                    }
+                </td>
+                <td>
+                    <div id="semDisId" style="display: none;">
+                        @dis.Id
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<br />
+<br />
+
+<h4>Available disciplines</h4>
+
+<table class="table" id="availableDis">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Professor Name
+            </th>
+            <th>
+                Score
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dis in Model.AvailableDisciplies)
+        {
+            <tr>
+                <td>
+                    @dis.Name
+                </td>
+                <td>
+                    @dis.ProfessorName
+                </td>
+                <td>
+                    @dis.Score
+                </td>
+                <td>
+                    <button type="button" name="addBtn" onclick="addBtn(this)" class="btn btn-success mb-2">Add</button>
+                </td>
+                <td>
+                    <div id="availDisId" style="display: none;">
+                        @dis.Id
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function addBtn(result) {
+            var childrens = $(result).parent().parent().children();
+            var hiddenDivId = $(childrens[4]).children();
+            var disId = $(hiddenDivId[0]).text().trim();
+            
+            var disName = $(childrens[0]).text().trim();
+            var disPrName = $(childrens[1]).text().trim();
+            var disScore = $(childrens[2]).text().trim();
+
+            var semId = $('#semId').text().trim();
+            
+            $.ajax(
+                {
+                    type: "PUT", //HTTP PUT Method
+                    url: "/Semesters/AddDiscipline", // Controller/View
+                    data: { //Passing data
+                        SemId: semId,
+                        DisId: disId,
+                    },
+                    success: function (result) {
+                        $(childrens).remove()
+                        if (Number(disScore) === 0) {
+                            $('#semsdis > tbody:last')
+                                .append(`<tr><td>${disName}</td><td>${disPrName}</td><td>${disScore}</td>
+                    <td><button type="button" name="deleteBtn" onclick="deleteBtn(this)" class="btn btn-danger mb-2">Remove</button></td>
+                 <td><div id="semDisId" style="display: none;"> ${disId} </div></td></tr>`);
+                        }
+                        else {
+                            $('#semsdis > tbody:last')
+                                .append(`<tr><td>${disName}</td><td>${disPrName}</td><td>${disScore}</td><td></td>
+                      <td><div id="semDisId" style="display: none;"> ${disId} </div></td></tr>`);
+                        }
+                    }
+                });
+        };
+
+        function deleteBtn(result) {
+            var childrens = $(result).parent().parent().children();
+            var hiddenDivId = $(childrens[4]).children();
+            var disId = $(hiddenDivId[0]).text().trim();
+
+            var disName = $(childrens[0]).text().trim();
+            var disPrName = $(childrens[1]).text().trim();
+            var disScore = $(childrens[2]).text().trim();
+
+            $.ajax(
+                {
+                    type: "PUT", //HTTP PUT Method
+                    url: "/Semesters/DeleteDiscipline", // Controller/View
+                    data: { //Passing data
+                        DisId: disId,
+                    },
+                    success: function (result) {
+                        $(childrens).remove()
+                        $('#availableDis > tbody:last')
+                            .append(`<tr><td>${disName}</td><td>${disPrName}</td><td>${disScore}</td>
+                      <td><button type="button" name="addBtn" onclick="addBtn(this)" class="btn btn-success mb-2">Add</button></td>
+                      <td> <div id="availDisId" style="display: none;"> ${disId} </div></td></tr>`)
+                    }
+                });
+        }
+        
+    </script>
+
+}
+

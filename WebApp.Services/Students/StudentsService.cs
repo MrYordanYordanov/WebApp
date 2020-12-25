@@ -32,6 +32,8 @@ namespace WebApp.Services.Students
                 students.Add(student);
             }
 
+            await this.Connection.CloseAsync();
+
             return students;
         }
 
@@ -39,7 +41,6 @@ namespace WebApp.Services.Students
         {
             try
             {
-                this.Connection.Close();
                 this.Connection.Open();
 
                 var command = new MySqlCommand("SELECT * FROM students ORDER BY id DESC LIMIT 1;", this.Connection);
@@ -76,7 +77,6 @@ namespace WebApp.Services.Students
         {
             try
             {
-                this.Connection.Close();
                 await this.Connection.OpenAsync();
                 var com = new MySqlCommand("sp_AddStudent", this.Connection);
                 com.CommandType = CommandType.StoredProcedure;

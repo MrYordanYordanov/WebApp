@@ -24,9 +24,10 @@ namespace WebApp.Controllers
         }
 
         // GET: Discplines/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var model = await this.semestersService.GetSemesterDisciplines(id);
+            return View(model);
         }
 
         // POST: Semesters/Create
@@ -47,6 +48,23 @@ namespace WebApp.Controllers
             this.semestersService.Edit(semester);
 
             return Json(semester);
+        }
+
+        // Put: Semesters/AddDiscipline
+        [HttpPut]
+        public JsonResult AddDiscipline(AddSemesterDiscipline model)
+        {
+            this.semestersService.AddDiscipline(model);
+
+            return Json(model);
+        }
+
+        [HttpPut]
+        public JsonResult DeleteDiscipline(DeleteSemesterDiscipline model)
+        {
+            this.semestersService.DeleteDiscipline(model.DisId);
+
+            return Json(model);
         }
     }
 }

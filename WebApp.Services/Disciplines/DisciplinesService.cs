@@ -22,15 +22,21 @@ namespace WebApp.Services.Disciplines
                 var name = reader.GetValue(1);
                 var professorName = reader.GetValue(2);
                 var score = reader.GetValue(3);
+
+                decimal parsedScore = 0.0m;
+                decimal.TryParse(score.ToString(), out parsedScore);
+
                 var discipline = new Discipline()
                 {
                     Id = int.Parse(id.ToString()),
                     Name = name.ToString(),
                     ProfessorName = professorName.ToString(),
-                    Score = decimal.Parse(score.ToString()),
+                    Score = parsedScore,
                 };
                 disciplines.Add(discipline);
             }
+
+            await this.Connection.CloseAsync();
 
             return disciplines;
         }
@@ -39,7 +45,6 @@ namespace WebApp.Services.Disciplines
         {
             try
             {
-                this.Connection.Close();
                 this.Connection.Open();
 
                 var command = new MySqlCommand("SELECT * FROM disciplines ORDER BY id DESC LIMIT 1;", this.Connection);
@@ -51,12 +56,16 @@ namespace WebApp.Services.Disciplines
                     var name = reader.GetValue(1);
                     var professorName = reader.GetValue(2);
                     var score = reader.GetValue(3);
+
+                    decimal parsedScore = 0.0m;
+                    decimal.TryParse(score.ToString(), out parsedScore);
+
                     discipline = new Discipline()
                     {
                         Id = int.Parse(id.ToString()),
                         Name = name.ToString(),
                         ProfessorName = professorName.ToString(),
-                        Score = decimal.Parse(score.ToString()),
+                        Score = parsedScore,
                     };
                 }
                 return discipline;
@@ -76,7 +85,6 @@ namespace WebApp.Services.Disciplines
         {
             try
             {
-                this.Connection.Close();
                 await this.Connection.OpenAsync();
                 var com = new MySqlCommand("sp_AddDiscipline", this.Connection);
                 com.CommandType = CommandType.StoredProcedure;
