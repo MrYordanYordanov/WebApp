@@ -64,7 +64,7 @@ using WebApp.Models;
             WriteLiteral("\r\n<h2>Semesters</h2>\r\n\r\n<div>\r\n    ");
             EndContext();
             BeginContext(133, 742, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c871f3e371024790a3171a72f4c76f16", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5e7eb7e192664596aacea15e6b2a173e", async() => {
                 BeginContext(159, 709, true);
                 WriteLiteral(@"
         <label for=""Name"">Name:</label>

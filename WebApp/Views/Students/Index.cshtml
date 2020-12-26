@@ -61,10 +61,8 @@
                 @Html.DisplayFor(modelItem => item.Dob)
             </td>
             <td>
-                <button type="button" name="editBtn"  onclick="editBtn(this)" class="btn btn-warning mb-2">Edit</button>
-                @*@Html.("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                <button type="button" name="editBtn" onclick="editBtn(this)" class="btn btn-warning mb-2">Edit</button>
+                <a href="/Students/Details/@item.Id" class="btn btn-info" role="button">View Semesters</a>
             </td>
         </tr>
         }
@@ -103,7 +101,8 @@
                         $(childrens[3]).empty()
                             .append(`<td>${result.dob.toString()}</td>`);
                         $(childrens[4]).empty()
-                            .append(`<button type="button" onclick="editBtn($(this))" class="btn btn-warning mb-2">Edit</button>`);                      
+                            .append(`<td><button type="button" onclick="editBtn($(this))" class="btn btn-warning mb-2">Edit</button>
+                                  <a href="/Students/Details/${id}" class="btn btn-info" role="button">View Semesters</a></td>`);                      
                     }
                 });
         };
@@ -112,6 +111,7 @@
         function editBtn(result) {
 
             var childrens = $(result).parent().parent().children();
+            var studId = Number($(childrens[0]).text().trim());
             var studentName = $(childrens[1]).text().trim();
             var studentSurname = $(childrens[2]).text().trim();
             var studentDob = $(childrens[3]).text().trim();
@@ -123,7 +123,8 @@
             $(childrens[3]).empty()
                 .append(`<input type="date" class="form-control" value="${studentDob}" id="studentDobEdit" placeholder="Date">`)
             $(childrens[4]).empty()
-                .append(`<button  onclick="saveBtn($(this))" type="button" name="saveBtn" class="btn btn-success mb-2">Save</button>`)            
+                .append(`<button  onclick="saveBtn($(this))" type="button" name="saveBtn" class="btn btn-success mb-2">Save</button>
+                       <a href="/Students/Details/${studId}" class="btn btn-info" role="button">View Semesters</a>`)            
             };
 
         
@@ -147,7 +148,8 @@
                            
                             $('#studentsGrid > tbody:last')
                                 .append(`<tr><td>${result.id}</td><td>${result.name}</td><td>${result.surname}</td><td>${result.dob}</td><td>
-                    <button type="button" onclick="editBtn(this)"   name="editBtn" class="btn btn-warning mb-2">Edit</button></td></tr>`);
+                    <button type="button" onclick="editBtn(this)"   name="editBtn" class="btn btn-warning mb-2">Edit</button>
+                    <a href="/Students/Details/${result.id}" class="btn btn-info" role="button">View Semesters</a></td></tr>`);
                         }
                     });
 

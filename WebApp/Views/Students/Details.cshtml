@@ -1,0 +1,150 @@
+﻿@model WebApp.Models.ViewModels.StudentSemesters
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Name: @Model.Student.Name</h4>
+    <h5>Surname: @Model.Student.Surname</h5>
+    <h5>DOB: @Model.Student.Dob</h5>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+    <div id="studId" style="display: none;">
+        @Model.Student.Id
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to students</a>
+</div>
+<br />
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Show semesters
+</button>
+
+<div class="collapse" id="collapseExample">
+    <table class="table" id="semsstud">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sem in Model.Semesters)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => sem.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => sem.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => sem.EndDate)
+                    </td>
+                    <td>
+                        <a href="/Semesters/Details/@sem.Id" class="btn btn-info" role="button">View Disciplines</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<br />
+<br />
+
+<h4>Available disciplines</h4>
+
+<table class="table" id="availableSem">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sem in Model.AvailableSemesters)
+        {
+            <tr>
+                <td>
+                    @sem.Name
+                </td>
+                <td>
+                    @sem.StartDate
+                </td>
+                <td>
+                    @sem.EndDate
+                </td>
+                <td>
+                    <button type="button" name="addBtn" onclick="addBtn(this)" class="btn btn-success mb-2">Add</button>
+                </td>
+                <td>
+                    <div id="availDisId" style="display: none;">
+                        @sem.Id
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function addBtn(result) {
+            var childrens = $(result).parent().parent().children();
+            var hiddenDivId = $(childrens[4]).children();
+            var semId = $(hiddenDivId[0]).text().trim();
+
+            var semName = $(childrens[0]).text().trim();
+            var semStartDate = $(childrens[1]).text().trim();
+            var semEndDate= $(childrens[2]).text().trim();
+
+            var studId = $('#studId').text().trim();
+
+            $.ajax(
+                {
+                    type: "PUT", //HTTP PUT Method
+                    url: "/Students/AddSemester", // Controller/View
+                    data: { //Passing data
+                        StudId: studId,
+                        SemId: semId,
+                    },
+                    success: function (result) {
+                        $(childrens).remove()
+                        $('#semsstud > tbody:last')
+                            .append(`<tr><td>${semName}</td><td>${semStartDate}</td><td>${semEndDate}</td>
+                      <td><a href="/Semesters/Details/${semId}" class="btn btn-info" role="button">View Disciplines</a></td></tr>`);
+
+                    }
+                });
+        };
+    </script>
+
+}

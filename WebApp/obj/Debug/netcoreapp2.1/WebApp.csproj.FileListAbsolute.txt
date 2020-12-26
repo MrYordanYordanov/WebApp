@@ -38,3 +38,4 @@ C:\Users\ACER\source\repos\WebApp\WebApp\obj\Debug\netcoreapp2.1\Razor\Views\Stu
 C:\Users\ACER\source\repos\WebApp\WebApp\obj\Debug\netcoreapp2.1\Razor\Views\Disciplines\Index.g.cshtml.cs
 C:\Users\ACER\source\repos\WebApp\WebApp\obj\Debug\netcoreapp2.1\Razor\Views\Semesters\Index.g.cshtml.cs
 C:\Users\ACER\source\repos\WebApp\WebApp\obj\Debug\netcoreapp2.1\Razor\Views\Semesters\Details.g.cshtml.cs
+C:\Users\ACER\source\repos\WebApp\WebApp\obj\Debug\netcoreapp2.1\Razor\Views\Students\Details.g.cshtml.cs

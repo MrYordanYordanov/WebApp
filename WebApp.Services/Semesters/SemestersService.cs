@@ -117,6 +117,7 @@ namespace WebApp.Services.Semesters
             var reader = await command.ExecuteReaderAsync();
             var model = new SemesterDisciplies();
             var disciplines = new List<Discipline>();
+            
             while (await reader.ReadAsync())
             {
                 var disId = reader.GetValue(0);
@@ -134,22 +135,10 @@ namespace WebApp.Services.Semesters
                     ProfessorName=disProfessorName.ToString(),
                     Score= parsedScore
                 });
-                
-                    var semesterId = reader.GetValue(5);
-                    var semName = reader.GetValue(6);
-                    var semStartDate = reader.GetValue(7);
-                    var semEndDate = reader.GetValue(8);
-                    var semester = new Semester()
-                    {
-                        Id = int.Parse(semesterId.ToString()),
-                        Name = semName.ToString(),
-                        StartDate = DateTime.Parse(semStartDate.ToString()).ToString("yyyy-MM-dd"),
-                        EndDate = DateTime.Parse(semEndDate.ToString()).ToString("yyyy-MM-dd")
-                    };
-                    model.Semester = semester;
             }
             await this.Connection.CloseAsync();
 
+            model.Semester = await this.GetSemesterById(id);
             model.Disciplines = disciplines;
             model.AvailableDisciplies = await this.GetAvailableDisciplines();
 
@@ -177,6 +166,30 @@ namespace WebApp.Services.Semesters
             await this.Connection.CloseAsync();
         }
 
+        private async Task<Semester> GetSemesterById(int id)
+        {
+            await this.Connection.OpenAsync();
+            var command = new MySqlCommand($"SELECT * FROM semesters WHERE id={id};", this.Connection);
+            var reader = await command.ExecuteReaderAsync();
+            var semester = new Semester();
+            while (await reader.ReadAsync())
+            {
+                var name = reader.GetValue(1);
+                var startDate = reader.GetValue(2);
+                var endDate = reader.GetValue(3);
+                semester = new Semester()
+                {
+                    Id = id,
+                    Name = name.ToString(),
+                    StartDate = DateTime.Parse(startDate.ToString()).ToString("yyyy-MM-dd"),
+                    EndDate = DateTime.Parse(endDate.ToString()).ToString("yyyy-MM-dd")
+                };
+            }
+
+            await this.Connection.CloseAsync();
+
+            return semester;
+        }
 
         private async Task<List<Discipline>> GetAvailableDisciplines()
         {

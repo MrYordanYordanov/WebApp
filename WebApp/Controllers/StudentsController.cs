@@ -26,16 +26,11 @@ namespace WebApp.Controllers
         }
 
         // GET: Students/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var model = await this.studentService.GetStudentSemesters(id);
+            return View(model);
         }
-
-        //// GET: Students/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
 
         // POST: Students/Create
         [HttpPost]
@@ -47,13 +42,7 @@ namespace WebApp.Controllers
 
             return Json(model);
         }
-
-        //// GET: Students/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
+        
         // Put: Students/Edit/5
         [HttpPut]
         public JsonResult Edit(Student student)
@@ -69,21 +58,13 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: Students/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        
+        [HttpPut]
+        public JsonResult AddSemester(AddStudentSemester model)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            this.studentService.AddSemester(model);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Json(model);
         }
     }
 }
