@@ -30,7 +30,8 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.1",
           "MySqlConnector": "1.2.1",
           "WebApp.Models": "1.0.0",
-          "WebApp.Services": "1.0.0"
+          "WebApp.Services": "1.0.0",
+          "WebApp.Validation": "1.0.0"
         },
         "runtime": {
           "WebApp.dll": {}
@@ -546,6 +547,17 @@
         },
         "compile": {
           "WebApp.Services.dll": {}
+        }
+      },
+      "WebApp.Validation/1.0.0": {
+        "dependencies": {
+          "WebApp.Models": "1.0.0"
+        },
+        "runtime": {
+          "WebApp.Validation.dll": {}
+        },
+        "compile": {
+          "WebApp.Validation.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3691,6 +3703,11 @@
       "sha512": ""
     },
     "WebApp.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebApp.Validation/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

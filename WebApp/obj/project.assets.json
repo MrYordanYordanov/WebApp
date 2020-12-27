@@ -4648,6 +4648,19 @@
         "runtime": {
           "bin/placeholder/WebApp.Services.dll": {}
         }
+      },
+      "WebApp.Validation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "WebApp.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WebApp.Validation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebApp.Validation.dll": {}
+        }
       }
     }
   },
@@ -12630,6 +12643,11 @@
       "type": "project",
       "path": "../WebApp.Services/WebApp.Services.csproj",
       "msbuildProject": "../WebApp.Services/WebApp.Services.csproj"
+    },
+    "WebApp.Validation/1.0.0": {
+      "type": "project",
+      "path": "../WebApp.Validation/WebApp.Validation.csproj",
+      "msbuildProject": "../WebApp.Validation/WebApp.Validation.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -12640,7 +12658,8 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.1",
       "MySqlConnector >= 1.2.1",
       "WebApp.Models >= 1.0.0",
-      "WebApp.Services >= 1.0.0"
+      "WebApp.Services >= 1.0.0",
+      "WebApp.Validation >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -12678,6 +12697,9 @@
             },
             "C:\\Users\\ACER\\source\\repos\\WebApp\\WebApp.Services\\WebApp.Services.csproj": {
               "projectPath": "C:\\Users\\ACER\\source\\repos\\WebApp\\WebApp.Services\\WebApp.Services.csproj"
+            },
+            "C:\\Users\\ACER\\source\\repos\\WebApp\\WebApp.Validation\\WebApp.Validation.csproj": {
+              "projectPath": "C:\\Users\\ACER\\source\\repos\\WebApp\\WebApp.Validation\\WebApp.Validation.csproj"
             }
           }
         }

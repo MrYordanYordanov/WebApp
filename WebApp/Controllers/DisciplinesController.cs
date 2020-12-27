@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WebApp.Models.ViewModels;
 using WebApp.Services.Disciplines;
+using WebApp.Validation.Disciplines;
 
 namespace WebApp.Controllers
 {
@@ -12,9 +14,12 @@ namespace WebApp.Controllers
     {
         private readonly DisciplinesService disciplinesService;
 
-        public DisciplinesController(DisciplinesService discipliesService)
+        private readonly DisciplinesValidation validatior;
+
+        public DisciplinesController(DisciplinesService discipliesService, DisciplinesValidation validatior)
         {
             this.disciplinesService = discipliesService;
+            this.validatior = validatior;
         }
         // GET: 
         public async Task<ActionResult> Index()
@@ -34,6 +39,8 @@ namespace WebApp.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<JsonResult> Create(Discipline discipline)
         {
+            var messages = this.validatior.ValidateDisciplines(discipline);
+            ViewBag.Validation = string.Join("", messages);
             await this.disciplinesService.Create(discipline);
             var model = this.disciplinesService.GetLastAddedDiscipline();
 
@@ -44,9 +51,16 @@ namespace WebApp.Controllers
         [HttpPut]
         public JsonResult Edit(Discipline discipline)
         {
-            this.disciplinesService.Edit(discipline);
-
-            return Json(discipline);
+            var model = this.validatior.ValidateEditDiscipline(discipline);
+            if (model.Error)
+            {
+                return Json(new { success = false, result = model});
+            }
+            else
+            {
+                this.disciplinesService.Edit(discipline);
+                return Json(new { success = true, result = discipline });
+            }
         }
     }
 }

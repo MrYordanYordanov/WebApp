@@ -1,0 +1,12 @@
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\bin\Debug\netcoreapp2.1\WebApp.Validation.deps.json
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\bin\Debug\netcoreapp2.1\WebApp.Validation.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\bin\Debug\netcoreapp2.1\WebApp.Validation.pdb
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\bin\Debug\netcoreapp2.1\WebApp.Models.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\bin\Debug\netcoreapp2.1\WebApp.Models.pdb
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\obj\Debug\netcoreapp2.1\WebApp.Validation.csprojAssemblyReference.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\obj\Debug\netcoreapp2.1\WebApp.Validation.csproj.CoreCompileInputs.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\obj\Debug\netcoreapp2.1\WebApp.Validation.AssemblyInfoInputs.cache
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\obj\Debug\netcoreapp2.1\WebApp.Validation.AssemblyInfo.cs
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\obj\Debug\netcoreapp2.1\WebApp.Validation.csproj.CopyComplete
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\obj\Debug\netcoreapp2.1\WebApp.Validation.dll
+C:\Users\ACER\source\repos\WebApp\WebApp.Validation\obj\Debug\netcoreapp2.1\WebApp.Validation.pdb

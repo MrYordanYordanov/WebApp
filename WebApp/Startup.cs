@@ -13,6 +13,9 @@ using MySqlConnector;
 using WebApp.Services.Disciplines;
 using WebApp.Services.Semesters;
 using WebApp.Services.Students;
+using WebApp.Validation.Disciplines;
+using WebApp.Validation.Semesters;
+using WebApp.Validation.Students;
 
 namespace WebApp
 {
@@ -72,6 +75,9 @@ namespace WebApp
             services.AddScoped<StudentsService>();
             services.AddScoped<DisciplinesService>();
             services.AddScoped<SemestersService>();
+            services.AddScoped<StudentsValidation>();
+            services.AddScoped<SemestersValidation>();
+            services.AddScoped<DisciplinesValidation>();
         }
     }
 }

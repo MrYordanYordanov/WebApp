@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using WebApp.Models.ViewModels;
 using WebApp.Services.Students;
+using WebApp.Validation.Students;
 
 namespace WebApp.Controllers
 {
@@ -14,9 +15,12 @@ namespace WebApp.Controllers
     {
         private readonly StudentsService studentService;
 
-        public StudentsController(StudentsService studentService)
+        private readonly StudentsValidation validatior;
+
+        public StudentsController(StudentsService studentService, StudentsValidation validatior)
         {
             this.studentService = studentService;
+            this.validatior = validatior;
         }
         // GET: Students
         public async Task<ActionResult> Index()
@@ -34,22 +38,30 @@ namespace WebApp.Controllers
 
         // POST: Students/Create
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<JsonResult>  Create(Student student)
+        public async Task<JsonResult> Create(Student student)
         {
+            var messages = this.validatior.ValidateStudent(student);
+            ViewBag.Validation = string.Join("", messages);
             await this.studentService.Create(student);
             var model = this.studentService.GetLastAddedStudent();
 
             return Json(model);
         }
-        
+
         // Put: Students/Edit/5
         [HttpPut]
         public JsonResult Edit(Student student)
         {
-            this.studentService.Edit(student);
-
-            return Json(student);
+            var model = this.validatior.ValidateEditStudent(student);
+            if (model.Error)
+            {
+                return Json(new { success = false, result = model });
+            }
+            else
+            {
+                this.studentService.Edit(student);
+                return Json(new { success = true, result = student });
+            }
         }
 
         // GET: Students/Delete/5
@@ -58,7 +70,7 @@ namespace WebApp.Controllers
             return View();
         }
 
-        
+
         [HttpPut]
         public JsonResult AddSemester(AddStudentSemester model)
         {

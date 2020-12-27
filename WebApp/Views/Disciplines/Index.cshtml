@@ -7,7 +7,9 @@
 <h2>Disciplines</h2>
 <br />
 
-
+<div class="row">
+    @ViewBag.Validation
+</div>
 <form id="disForm">
     <div class="form-row">
         <div class="form-group col-md-3">
@@ -105,7 +107,7 @@
     <script type="text/javascript">
 
         var nameregex = /^[A-Z].+$/;
-        //var prnameregex = /^[A-Z][A-Za-z ]+$/;
+        var prnameregex = /^[A-Z]+[a-z]+([\s.]*[A-Z]+[a-z]+)*$/;
 
         function nameValidation(nameVal, idMessSelector, inputIdSellector) {
             var nameMessage = "";
@@ -151,14 +153,14 @@
                 return false;
             }
             else {
-                if (prnameVal.match(nameregex)) {
+                if (prnameVal.match(prnameregex)) {
                     $(idMessSelector).attr('class', 'hidden');
                     $(idMessSelector).text();
 
                     return true;
                 }
                 else {
-                    prnameMessage = "Proffesor Name must starts with uppercase follow with lowercase letter and contains at least 3 letters";
+                    prnameMessage = "Proffesor Name must starts with uppercase follow with lowercase letter and contains at least 2 letters";
                     $(idMessSelector).text(prnameMessage);
                     $(idMessSelector).attr('class', 'visible-lg');
                     $(inputIdSellector).css('border', '2px solid #FF0000');
@@ -210,6 +212,13 @@
             scoreValidation(scoreVal, '#scoreVMessage', '#disciplineScore');
         })
 
+        function showErrorMessages(message, messSelector, inputSellector) {
+            $(inputSellector).css('border', '2px solid #FF0000');
+            $(messSelector).text(message);
+            $(messSelector).attr('class', 'visible-lg');
+            $(messSelector).css('color', 'red');
+        }
+
 
         function saveBtn(result) {
             var childrens = $(result).parent().parent().children();
@@ -250,24 +259,30 @@
                             ProfessorName: disEditPrName,
                             Score: disEditPrScore
                         },
-                        success: function (result) {
-                            $(childrens[1]).empty()
-                                .append(`<td>${result.name}<div class="hidden" id="editNameVMessage">
-                                   </div></td>`);
-                            $(childrens[2]).empty()
-                                .append(`<td>${result.professorName}<div class="hidden" id="editPrVMessage">
-                            </div></td>`);
-                            $(childrens[3]).empty()
-                                .append(`<td>${result.score.toFixed(2)}<div class="hidden" id="editScoreVMessage">
-                            </div></td>`);
-                            $(childrens[4]).empty()
-                                .append(`<button type="button" onclick="editBtn($(this))" class="btn btn-warning mb-2">Edit</button>`);
+                        success: function (response) {
+                            if (response.success) {
+                                $(childrens[1]).empty()
+                                    .append(`${response.result.name}`);
+                                $(childrens[2]).empty()
+                                    .append(`${response.result.professorName}`);
+                                $(childrens[3]).empty()
+                                    .append(`${response.result.score.toFixed(2)}`);
+                                $(childrens[4]).empty()
+                                    .append(`<button type="button" onclick="editBtn($(this))" class="btn btn-warning mb-2">Edit</button>`);
+                            } else {
+                                if (response.result.nameMessage) {
+                                    showErrorMessages(response.result.nameMessage, nameinput[1], nameinput[0]);
+                                }
+                                if (response.result.prNameMessage) {
+                                    showErrorMessages(response.result.prNameMessage, prinput[1], prinput[0]);
+                                }
+                                if (response.result.scoreMessage) {
+                                    showErrorMessages(response.result.scoreMessage, scoreinput[1], scoreinput[0]);
+                                }
+                            }
                         }
                     });
-            } else {
-                result.preventDefault();
-            }
-
+            } 
         };
 
         function editBtn(result) {
@@ -287,6 +302,23 @@
                    <div class="hidden" id="editScoreVMessage"></div>`)
             $(childrens[4]).empty()
                 .append(`<button  onclick="saveBtn($(this))" type="button" name="saveBtn" class="btn btn-success mb-2">Save</button>`)
+
+            var nameinput = $(childrens[1]).children();
+            var prinput = $(childrens[2]).children();
+            var scoreinput = $(childrens[3]).children();
+
+            $(nameinput[0]).on('change', function () {
+                var nameVal = $(this).val();
+                nameValidation(nameVal, nameinput[1], nameinput[0]);
+            })
+            $(prinput[0]).on('change', function () {
+                var prnameVal = $(this).val();
+                prNameValidation(prnameVal, prinput[1], prinput[0]);
+            })
+            $(scoreinput[0]).on('change', function () {
+                var scoreVal = Number($(this).val());
+                scoreValidation(scoreVal, scoreinput[1], scoreinput[0]);
+            })
         };
 
         //$(document).ready(function () {
