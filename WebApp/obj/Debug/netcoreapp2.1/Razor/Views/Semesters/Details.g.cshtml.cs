@@ -103,7 +103,7 @@ using WebApp.Models;
             WriteLiteral("\r\n    </div>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(420, 43, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e8f3fe17753946eb9a7bb0139ccc06d0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3c12bea24e4547a98fbe9b136af6bcd9", async() => {
                 BeginContext(442, 17, true);
                 WriteLiteral("Back to semesters");
                 EndContext();
